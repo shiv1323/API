@@ -46,4 +46,24 @@ router.get("/docs/:company", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+// Reading data by category
+router.get("/docs/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+
+    // Use the .find() method to query data by category name
+    const data = await comData.find({ category: category });
+
+    if (!data || data.length === 0) {
+      // Handle the case where the data is not found for the given category
+      return res.status(404).send("Data not found");
+    }
+
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;
