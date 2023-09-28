@@ -6,10 +6,6 @@ router.get("/", (req, res) => {
   res.send("Fuck off !");
 });
 
-router.get("/docs/*", (req, res) => {
-  res.send("fuck u!");
-});
-
 //adding data to db
 router.post("/data", async (req, res) => {
   try {
@@ -37,14 +33,12 @@ router.get("/docs/category/:category", async (req, res) => {
   try {
     const category = req.params.category;
 
-    // Use the .find() method to query data by category name
+    // // Use the .find() method to query data by category name
     const data = await comData.find({ category: category });
-
     if (!data || data.length === 0) {
-      //   // Handle the case where the data is not found for the given category
+      //   //   // Handle the case where the data is not found for the given category
       return res.status(404).send("Data not found");
     }
-
     res.status(200).send(data);
   } catch (error) {
     console.log(error);
@@ -69,6 +63,10 @@ router.get("/docs/cmpny/:company", async (req, res) => {
     // res.status(500).send(error);
     res.send("Data not found");
   }
+});
+
+router.get("/docs/*", (req, res) => {
+  res.send("fuck u!");
 });
 
 module.exports = router;
