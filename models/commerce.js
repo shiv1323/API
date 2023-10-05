@@ -28,6 +28,12 @@ const data = new Mongoose.Schema({
   shipping: {
     type: Boolean,
   },
+  delete: {
+    type: String,
+  },
+  offer: {
+    type: String,
+  },
 });
 
 const comData = new Mongoose.model("comData", data);
