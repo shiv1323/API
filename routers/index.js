@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const comData = require("../models/commerce");
+const Data = require("../models/desc");
 
 router.get("/", (req, res) => {
   res.send("Fuck off !");
@@ -67,6 +68,49 @@ router.get("/docs/cmpny/:company", async (req, res) => {
 
 router.get("/docs/*", (req, res) => {
   res.send("fuck u!");
+});
+
+//adding data to db
+router.post("/data1", async (req, res) => {
+  try {
+    const user = new Data(req.body);
+    const createUser = await user.save();
+    res.status(201).send(createUser);
+    console.log(req.body);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
+
+//reading wholedata
+router.get("/basic/docs", async (req, res) => {
+  try {
+    const dta = await Data.find({}).sort({ ranking: 1 });
+    res.status(201).send(dta);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
+
+// getting by id
+router.get("/basic/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // // Use the .find() method to query data by id name
+    const data = await Data.find({ _id: id });
+    if (!data || data.length === 0) {
+      //   //   // Handle the case where the data is not found for the given id
+      return res.status(404).send("Data not found");
+    }
+    res.status(200).send(data);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/basic/*", (req, res) => {
+  res.send("Fuck off");
 });
 
 module.exports = router;
