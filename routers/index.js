@@ -4,7 +4,7 @@ const comData = require("../models/commerce");
 const Data = require("../models/desc");
 
 router.get("/", (req, res) => {
-  res.send("Fuck off !");
+  res.send("Fuckdd off !");
 });
 
 //adding data to db
@@ -66,8 +66,23 @@ router.get("/docs/cmpny/:company", async (req, res) => {
   }
 });
 
-router.get("/docs/*", (req, res) => {
-  res.send("fuck u!");
+// getting by id
+router.get("/docs/find", async (req, res) => {
+  try {
+    const id = req.query.id;
+
+    // Use the .findOne() method to query data by id
+    const data = await comData.findOne({ _id: id });
+
+    if (!data) {
+      // Handle the case where the data is not found for the given id
+      return res.status(404).send("Data not found");
+    }
+    res.status(200).send(data);
+  } catch (error) {
+    console.log("Internal server error");
+    res.status(500).send("Internal server error");
+  }
 });
 
 //adding data to db
@@ -83,7 +98,7 @@ router.post("/data1", async (req, res) => {
 });
 
 //reading wholedata
-router.get("/basic/docs", async (req, res) => {
+router.get("/docs/basic", async (req, res) => {
   try {
     const dta = await Data.find({}).sort({ ranking: 1 });
     res.status(201).send(dta);
@@ -93,24 +108,24 @@ router.get("/basic/docs", async (req, res) => {
 });
 
 // getting by id
-router.get("/basic/:id", async (req, res) => {
+router.get("/docs/basic/find", async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.query.id;
 
-    // // Use the .find() method to query data by id name
-    const data = await Data.find({ _id: id });
-    if (!data || data.length === 0) {
-      //   //   // Handle the case where the data is not found for the given id
+    console.log(id);
+
+    // Use the .findOne() method to query data by id
+    const data = await Data.findOne({ _id: id });
+
+    if (!data) {
+      // Handle the case where the data is not found for the given id
       return res.status(404).send("Data not found");
     }
     res.status(200).send(data);
   } catch (error) {
-    console.log(error);
+    console.log("Internal server error");
+    res.status(500).send("Internal server error");
   }
-});
-
-router.get("/basic/*", (req, res) => {
-  res.send("Fuck off");
 });
 
 module.exports = router;
