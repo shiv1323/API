@@ -66,25 +66,6 @@ router.get("/docs/cmpny/:company", async (req, res) => {
   }
 });
 
-// getting by id
-router.get("/docs/find", async (req, res) => {
-  try {
-    const id = req.query.id;
-
-    // Use the .findOne() method to query data by id
-    const data = await comData.findOne({ _id: id });
-
-    if (!data) {
-      // Handle the case where the data is not found for the given id
-      return res.status(404).send("Data not found");
-    }
-    res.status(200).send(data);
-  } catch (error) {
-    console.log("Internal server error");
-    res.status(500).send("Internal server error");
-  }
-});
-
 //adding data to db
 router.post("/data1", async (req, res) => {
   try {
@@ -104,6 +85,25 @@ router.get("/docs/basic", async (req, res) => {
     res.status(201).send(dta);
   } catch (error) {
     res.status(404).send(error);
+  }
+});
+
+// getting by id
+router.get("/docs/find", async (req, res) => {
+  try {
+    const id = req.query.id;
+
+    // Use the .findOne() method to query data by id
+    const data = await comData.findOne({ _id: id });
+
+    if (!data) {
+      // Handle the case where the data is not found for the given id
+      return res.status(404).send("Data not found");
+    }
+    res.status(200).send(data);
+  } catch (error) {
+    console.log("Internal server error");
+    res.status(500).send("Internal server error");
   }
 });
 
