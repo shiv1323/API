@@ -11,28 +11,31 @@ const data = new Mongoose.Schema({
     type: String,
   },
   rating: {
-    type: String,
+    type: Number,
   },
   image: {
     type: String,
   },
-  comapany: {
+  company: {
     type: String,
   },
   category: {
     type: String,
-  },
-  featured: {
-    type: Boolean,
-  },
-  shipping: {
-    type: Boolean,
   },
   delete: {
     type: String,
   },
   offer: {
     type: String,
+  },
+  reviews: {
+    type: Number,
+  },
+  inStock: {
+    type: Number,
+  },
+  featured: {
+    type: Boolean,
   },
 });
 
